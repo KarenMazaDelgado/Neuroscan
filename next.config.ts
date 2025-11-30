@@ -8,9 +8,9 @@ const nextConfig: NextConfig = {
         // This is the local path used in your page.tsx: const HF_SPACE_URL = "/api/gradio-proxy/"; 
         source: '/api/gradio-proxy/:path*',
         
-        // CRITICAL: This is the correct destination URL for your Hugging Face Space.
-        // It points to: https://karenmaza-neuroscan-backend.hf.space/
-        destination: 'https://karenmaza-neuroscan-backend.hf.space/:path*',
+        // CRITICAL: This is the updated destination URL for your Hugging Face Organization Space.
+        // It now points to: https://AI4ALL3DCNN-neuroscan-backend.hf.space/:path*
+        destination: 'https://AI4ALL3DCNN-neuroscan-backend.hf.space/:path*',
       },
     ];
   },
