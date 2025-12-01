@@ -145,8 +145,7 @@ export default function Home() {
               </h1>
     
               <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
-                Bridging the gap in radiological review with deep learning. 
-                Detecting the critical 3mm anomalies that human vision misses.
+                Efficient triage for radiologists. Accessible screening for under-resourced hospitals.
               </p>
     
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -166,7 +165,7 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-20 items-center">
                 
                 <div className="space-y-10">
-                  <h2 className="text-4xl font-extrabold text-slate-900">The Silent Threat</h2>
+                  <h2 className="text-4xl font-extrabold text-slate-900">Why NeuroScan Matters</h2>
                   <div className="space-y-8">
                     <div className="flex gap-5">
                       <div className="mt-1 bg-rose-50 p-3 rounded-2xl h-fit border border-rose-100">
@@ -185,21 +184,33 @@ export default function Home() {
                         <AlertCircle className="w-6 h-6 text-amber-600" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-slate-900">The 3mm Blind Spot</h3>
+                        <h3 className="text-xl font-bold text-slate-900">The Cognitive Fatigue Problem</h3>
                         <p className="text-slate-600 mt-2 leading-relaxed text-lg">
-                          Aneurysms under 3mm are notoriously difficult to spot in complex 3D MRA scans, leading to potentially missed early interventions.
+                          A landmark <a href="https://pubs.rsna.org/doi/abs/10.1148/radiol.2017170555" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 underline">2018 study analyzing 2.9 million radiology exams</a> found diagnostic errors peaked after <span className="font-black text-slate-900">10 hours</span> into shifts, with <span className="font-black text-slate-900">76% higher volume</span> on error-containing shifts.
                         </p>
                       </div>
                     </div>
-    
-                      <div className="flex gap-5">
+
+                    <div className="flex gap-5">
                       <div className="mt-1 bg-cyan-50 p-3 rounded-2xl h-fit border border-cyan-100">
                         <HeartPulse className="w-6 h-6 text-cyan-600" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-slate-900">The AI Advantage</h3>
+                        <h3 className="text-xl font-bold text-slate-900">Efficient Triage for Radiologists</h3>
                         <p className="text-slate-600 mt-2 leading-relaxed text-lg">
-                          NeuroScan acts as a "second pair of eyes" to support clinical teams. While human radiologists generally maintain superior overall diagnostic accuracy, NeuroScan excels in detecting small, high-risk anomalies that are often missed due to human fatigue or visual limitations.
+                          NeuroScan provides consistent automated pre-screening regardless of shift length or volume, flagging obvious cases so radiologists can focus their expertise on ambiguous findings and maintain diagnostic quality throughout their shifts.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-5">
+                      <div className="mt-1 bg-emerald-50 p-3 rounded-2xl h-fit border border-emerald-100">
+                        <Brain className="w-6 h-6 text-emerald-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-900">Democratizing Healthcare Access</h3>
+                        <p className="text-slate-600 mt-2 leading-relaxed text-lg">
+                          NeuroScan is trained on lower-resolution data comparable to 1.5T MRI systems from the 2005-2012 era, allowing it to work with older equipment in rural hospitals and emerging <a href="https://www.nature.com/articles/s41467-021-25441-6" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 underline">portable low-field MRI systems</a>, making advanced screening accessible to underserved communities.
                         </p>
                       </div>
                     </div>
@@ -227,18 +238,25 @@ export default function Home() {
                     <div className="w-16 h-1 bg-slate-200 mx-auto rounded-full"></div>
     
                       <div className="text-center space-y-2">
-                      <div className="text-6xl md:text-7xl font-black text-cyan-700 tracking-tight">~15%</div>
-                      <div className="text-sm text-slate-500 font-bold uppercase tracking-widest">Die before reaching the hospital</div>
+                      <div className="text-6xl md:text-7xl font-black text-cyan-700 tracking-tight">+226%</div>
+                      <div className="text-sm text-slate-500 font-bold uppercase tracking-widest">Error rate increase at high shift volumes (67-90 vs ≤19 studies)</div>
+                    </div>
+
+                    <div className="w-16 h-1 bg-slate-200 mx-auto rounded-full"></div>
+
+                      <div className="text-center space-y-2">
+                      <div className="text-6xl md:text-7xl font-black text-emerald-600 tracking-tight">&lt;1:500k</div>
+                      <div className="text-sm text-slate-500 font-bold uppercase tracking-widest">Typical radiologist ratio in sub-Saharan Africa</div>
                     </div>
                   </div>
-    
+
                 </div>
                 
                 {/* Sources Div, spanning both columns (or just placed after the grid) */}
               </div>
               <div className="pt-16 text-center">
                   <p className="text-sm text-slate-500 max-w-3xl mx-auto">
-                    *Sources: 6.5 million prevalence and 30,000 annual ruptures based on common NIH/CDC estimates. 15% pre-hospital mortality cited in clinical reports, including data from the Barrow Neurological Institute (2023).
+                    *Sources: 6.5 million prevalence and 30,000 annual ruptures based on common NIH/CDC estimates. Radiologist cognitive fatigue data from <a href="https://pubs.rsna.org/doi/abs/10.1148/radiol.2017170555" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 underline">Hanna et al., Radiology 2018</a>. Error rate volume correlation from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11288559/" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 underline">Ivanovic et al., AJNR 2024</a>. Sub-Saharan Africa radiologist shortage from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3424787/" target="_blank" rel="noopener noreferrer" className="text-cyan-600 hover:text-cyan-700 underline">Journal of Clinical Imaging Science 2012</a>.
                   </p>
               </div>
             </div>
@@ -255,28 +273,21 @@ export default function Home() {
                       <h2 className="text-3xl font-bold text-slate-900">Benchmarks & Data</h2>
                   </div>
                   <p className="text-slate-600 text-lg leading-relaxed">
-                    We benchmarked our V5 Model against historical radiologist performance data. The results show a massive improvement in "recall" (sensitivity) for small, difficult-to-detect vessels.
+                    Our V5 model achieved 83.72% sensitivity, approaching the 95% sensitivity reported in clinical MRA studies (Sailer et al., 2014), despite working with significantly lower resolution data (64×64×64 voxels vs. clinical 512×512×200+ scans).
                   </p>
                 </div>
-    
-                {/* Chart Image - White bg, subtle shadow */}
+
                 <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
-                                    {/* <img 
-                    src="/benchmark-chart.png" 
-                    alt="Benchmark Chart" 
-                    className="w-full h-auto rounded-lg"
-                  /> */}
-                </div>
-                
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
-                    <div className="text-sm text-slate-500 font-bold mb-1">Human Sensitivity (&lt;3mm)</div>
-                    <div className="text-4xl font-black text-slate-400">38.0%</div>
-                  </div>
-                  <div className="p-6 rounded-2xl bg-cyan-600 text-white shadow-xl shadow-cyan-600/20 relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-2 opacity-20"><Brain className="w-12 h-12 text-white" /></div>
-                    <div className="text-sm text-cyan-100 font-bold mb-1">NeuroScan V5 Sensitivity</div>
-                    <div className="text-4xl font-black text-white">83.7%</div>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600 font-semibold">NeuroScan V5 Sensitivity</span>
+                      <span className="text-2xl font-black text-cyan-600">83.72%</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-600 font-semibold">Clinical MRA Studies</span>
+                      <span className="text-2xl font-black text-slate-400">~95%</span>
+                    </div>
+                    <p className="text-sm text-slate-500 italic">Despite using 64×64×64 voxel resolution vs. clinical 512×512×200+ scans</p>
                   </div>
                 </div>
               </div>
