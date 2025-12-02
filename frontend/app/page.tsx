@@ -207,6 +207,24 @@ export default function Home() {
         }
     };
 
+    const downloadFile = async (filename: string) => {
+        try {
+            const response = await fetch(`/${filename}`);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error('Download failed:', error);
+            alert('Download failed. Please try again.');
+        }
+    };
+
     return (
         <main className="min-h-screen font-sans selection:bg-cyan-100">
           
@@ -451,12 +469,18 @@ export default function Home() {
                   <div className="border-t border-slate-200 pt-6">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Individual Samples</p>
                     <div className="grid grid-cols-2 gap-4">
-                      <a href="/sample_aneurysm_001.nii" download className="py-4 px-6 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-lg rounded-xl transition-colors border border-rose-200">
+                      <button
+                        onClick={() => downloadFile('sample_aneurysm_001.nii')}
+                        className="py-4 px-6 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-lg rounded-xl transition-colors border border-rose-200 cursor-pointer"
+                      >
                         Aneurysm
-                      </a>
-                      <a href="/sample_normal_001.nii" download className="py-4 px-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-lg rounded-xl transition-colors border border-emerald-200">
+                      </button>
+                      <button
+                        onClick={() => downloadFile('sample_normal_001.nii')}
+                        className="py-4 px-6 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-lg rounded-xl transition-colors border border-emerald-200 cursor-pointer"
+                      >
                         Normal
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
