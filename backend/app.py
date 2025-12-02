@@ -204,7 +204,7 @@ def predict(file_obj):
         img_data = nifti_img.get_fdata()
         original_shape = img_data.shape
 
-        # Resize to target size (28x28x28) and Normalize
+        # Resize to target size (64x64x64) and Normalize
         img_data_resized = resize(img_data, TARGET_SIZE, mode='constant', anti_aliasing=True).astype(np.float32)
 
         if img_data_resized.max() > img_data_resized.min():
