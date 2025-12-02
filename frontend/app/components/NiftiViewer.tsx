@@ -4,11 +4,11 @@ import { useEffect, useRef } from 'react';
 import { Niivue, NVImage } from '@niivue/niivue';
 
 interface NiftiViewerProps {
-  scanData: string;  // base64 encoded NIfTI
-  heatmapData: string;  // base64 encoded heatmap NIfTI
+  scanData: string;
+  heatmapData: string;
   predictedClass: string;
   confidence: number;
-  showExplanations?: boolean;  // Optional: show view explanations and legends (default true)
+  showExplanations?: boolean;
 }
 
 export default function NiftiViewer({ scanData, heatmapData, predictedClass, confidence, showExplanations = true }: NiftiViewerProps) {
@@ -18,7 +18,6 @@ export default function NiftiViewer({ scanData, heatmapData, predictedClass, con
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    // Initialize Niivue
     const nv = new Niivue({
       dragAndDropEnabled: false,
       backColor: [0, 0, 0, 1],
@@ -28,11 +27,9 @@ export default function NiftiViewer({ scanData, heatmapData, predictedClass, con
     nv.attachToCanvas(canvasRef.current);
     nvRef.current = nv;
 
-    // Load images
     loadImages();
 
     return () => {
-      // Cleanup
       if (nvRef.current) {
         nvRef.current = null;
       }
@@ -49,15 +46,12 @@ export default function NiftiViewer({ scanData, heatmapData, predictedClass, con
     if (!nvRef.current || !scanData || !heatmapData) return;
 
     try {
-      // Convert base64 to blob
       const scanBlob = base64ToBlob(scanData);
       const heatmapBlob = base64ToBlob(heatmapData);
 
-      // Create object URLs from blobs
       const scanUrl = URL.createObjectURL(scanBlob);
       const heatmapUrl = URL.createObjectURL(heatmapBlob);
 
-      // Load volumes using URLs with filenames
       await nvRef.current.loadVolumes([
         { url: scanUrl, name: 'scan.nii' },
         { url: heatmapUrl, name: 'heatmap.nii' }
@@ -67,15 +61,13 @@ export default function NiftiViewer({ scanData, heatmapData, predictedClass, con
       console.log('Volume 0 (scan):', nvRef.current.volumes[0]);
       console.log('Volume 1 (heatmap):', nvRef.current.volumes[1]);
 
-      // Set heatmap overlay properties after loading
+      // configure heatmap overlay
       if (nvRef.current.volumes.length > 1) {
         const heatmap = nvRef.current.volumes[1];
 
-        // Use 'warm' colormap (yellow-orange-red) which is better for heatmaps
         heatmap.colormap = 'warm';
-        heatmap.opacity = 1.0;  // Full opacity for visibility
+        heatmap.opacity = 1.0;
 
-        // Threshold the heatmap to only show high-attention regions (top 15%)
         if (heatmap.global_max !== undefined) {
           const threshold = heatmap.global_max * 0.15;
           heatmap.cal_min = threshold;
@@ -95,17 +87,13 @@ export default function NiftiViewer({ scanData, heatmapData, predictedClass, con
         nvRef.current.updateGLVolume();
       }
 
-      // Set view to show 3 planes + 3D rendering (4 panels in 2x2 grid)
-      // sliceTypeMultiplanar = 3 orthogonal + 1 3D render = 4 panels
+      // configure view
       nvRef.current.setSliceType(nvRef.current.sliceTypeMultiplanar);
-      nvRef.current.setMultiplanarLayout(2); // 2x2 grid layout
-      nvRef.current.opts.crosshairColor = [0, 1, 0, 1];  // Green crosshairs
-      nvRef.current.opts.isColorbar = false; // Hide colorbar
-
-      // Configure 3D rendering in 4th panel
+      nvRef.current.setMultiplanarLayout(2);
+      nvRef.current.opts.crosshairColor = [0, 1, 0, 1];
+      nvRef.current.opts.isColorbar = false;
       nvRef.current.setRenderAzimuthElevation(120, 15);
 
-      // Clean up object URLs to free memory
       URL.revokeObjectURL(scanUrl);
       URL.revokeObjectURL(heatmapUrl);
 

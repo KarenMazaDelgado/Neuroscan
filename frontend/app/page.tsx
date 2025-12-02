@@ -5,14 +5,10 @@ import { Upload, Activity, AlertCircle, CheckCircle2, ChevronRight, ShieldAlert,
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-// Dynamically import NiftiViewer to avoid SSR issues
 const NiftiViewer = dynamic(() => import('./components/NiftiViewer'), { ssr: false });
 
-// Use the local Next.js proxy rewrite path
-// DEFINED ONCE AT COMPONENT SCOPE
-// const HF_SPACE_URL = "https://ai4all3dcnn-neuroscan-backend.hf.space";
 const HF_SPACE_URL = "https://cooleschimo-neuroscan-backend.hf.space";
-// const HF_SPACE_URL = "http://127.0.0.1:7860";  // Local backend (only for local dev)
+// const HF_SPACE_URL = "http://127.0.0.1:7860";
 
 interface AnalysisResult {
   predictions: [string, number][];
@@ -28,11 +24,9 @@ interface BatchResult extends AnalysisResult {
 }
 
 export default function Home() {
-    // Single upload state
     const [file, setFile] = useState<File | null>(null);
     const [result, setResult] = useState<AnalysisResult | null>(null);
 
-    // Batch upload state
     const [batchMode, setBatchMode] = useState(false);
     const [files, setFiles] = useState<File[]>([]);
     const [batchResults, setBatchResults] = useState<BatchResult[]>([]);
@@ -40,18 +34,15 @@ export default function Home() {
     const [selectedResult, setSelectedResult] = useState<BatchResult | null>(null);
     const [selectedForCompare, setSelectedForCompare] = useState<BatchResult[]>([]);
 
-    // Compare mode state
     const [compareMode, setCompareMode] = useState(false);
     const [fileA, setFileA] = useState<File | null>(null);
     const [fileB, setFileB] = useState<File | null>(null);
     const [resultA, setResultA] = useState<AnalysisResult | null>(null);
     const [resultB, setResultB] = useState<AnalysisResult | null>(null);
 
-    // Common state
     const [loading, setLoading] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
-    // Handle scroll for navbar styling
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
@@ -69,12 +60,10 @@ export default function Home() {
 
             const response = await app.predict("/predict", [file]) as any;
 
-            // DEBUG: Log the entire response to see what we're getting
             console.log("Full response:", JSON.stringify(response, null, 2));
             console.log("response.data:", response.data);
             console.log("response.data[0]:", response.data?.[0]);
 
-            // The new backend returns a JSON object
             if (!response?.data?.[0]) {
                 throw new Error("Invalid response format from model");
             }
@@ -126,7 +115,6 @@ export default function Home() {
                 setBatchProgress({ current: i + 1, total: files.length });
 
                 try {
-                    // Add timeout wrapper (2 minutes per file)
                     const timeoutPromise = new Promise((_, reject) =>
                         setTimeout(() => reject(new Error('Timeout')), 120000)
                     );
@@ -143,7 +131,6 @@ export default function Home() {
                             filename: file.name,
                             fileIndex: i
                         });
-                        // Update results incrementally
                         setBatchResults([...results]);
                         console.log(`✓ Successfully processed ${file.name}`);
                     } else {
@@ -151,10 +138,8 @@ export default function Home() {
                     }
                 } catch (error: any) {
                     console.error(`✗ Error processing ${file.name}:`, error.message || error);
-                    // Continue with next file even if this one fails
                 }
 
-                // Small delay between requests to avoid overwhelming the backend
                 if (i < files.length - 1) {
                     await new Promise(resolve => setTimeout(resolve, 500));
                 }
@@ -187,7 +172,6 @@ export default function Home() {
             const app = await client(HF_SPACE_URL);
             console.log("Gradio client initialized for comparison.");
 
-            // Process both files
             const [responseA, responseB] = await Promise.all([
                 app.predict("/predict", [fileA]) as any,
                 app.predict("/predict", [fileB]) as any
@@ -219,7 +203,6 @@ export default function Home() {
         }
     };
 
-    // ... (rest of the return JSX) ...
     return (
         <main className="min-h-screen font-sans selection:bg-blue-100">
 
@@ -641,7 +624,6 @@ export default function Home() {
 
                     {/* File Upload Zone */}
                     {!batchMode && !compareMode ? (
-                      // Single file upload
                       <div className={`border-2 border-dashed rounded-lg p-12 text-center transition-all duration-300 group ${
                         file ? 'border-blue-500 bg-blue-50' : 'border-slate-300 hover:border-blue-400 hover:bg-slate-50'
                       }`}>
@@ -677,7 +659,6 @@ export default function Home() {
                         </label>
                       </div>
                     ) : compareMode ? (
-                      // Compare mode - two file uploads side by side
                       <div className="grid md:grid-cols-2 gap-4">
                         {/* File A Upload */}
                         <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-all duration-300 group ${
@@ -752,7 +733,6 @@ export default function Home() {
                         </div>
                       </div>
                     ) : batchMode ? (
-                      // Batch file upload
                       <div className={`border-2 border-dashed rounded-lg p-12 text-center transition-all duration-300 group ${
                         files.length > 0 ? 'border-blue-500 bg-blue-50' : 'border-slate-300 hover:border-blue-400 hover:bg-slate-50'
                       }`}>
@@ -1065,8 +1045,7 @@ export default function Home() {
                             {selectedForCompare.length === 2 && (
                               <button
                                 onClick={() => {
-                                  // Open comparison modal with the two selected scans
-                                  setSelectedResult(null); // Clear single view
+                                  setSelectedResult(null);
                                 }}
                                 className="px-4 py-2 bg-blue-600 text-white rounded text-sm font-bold hover:bg-blue-700 transition-all flex items-center gap-2"
                               >
@@ -1127,15 +1106,12 @@ export default function Home() {
                             const confidence = result.confidence * 100;
                             const isSelected = selectedForCompare.some(s => s.fileIndex === result.fileIndex);
 
-                            // Determine color based on prediction and confidence
                             let colorClass = 'border-amber-400 bg-amber-50';
                             if (confidence > 70) {
                               colorClass = isAneurysm
                                 ? 'border-rose-400 bg-rose-50'
                                 : 'border-emerald-400 bg-emerald-50';
                             }
-
-                            // Add selection styling
                             if (isSelected) {
                               colorClass = 'border-blue-600 bg-blue-100 ring-2 ring-blue-200';
                             }
