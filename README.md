@@ -697,7 +697,9 @@ This project was developed by:
 - **Ousman Bah** - [GitHub](https://github.com/ousmanbah10) | [LinkedIn](https://linkedin.com/in/ousman-bah)
 - **Karen Maza Delgado** - [GitHub](https://github.com/KarenMazaDelgado/) | [LinkedIn](https://www.linkedin.com/in/karenmaza/)
 - **Chimin Liu** - [GitHub](https://github.com/cooleschimo) | [LinkedIn](https://linkedin.com/in/chimin-liu)
-- **Maria Garcia** - 
+- **Maria Garcia** -  [GitHub](https://github.com/spacegrlmars) | [LinkedIn](https://www.linkedin.com/in/spacegrlmars?)
+
+- 
 
 *This project was completed in collaboration with the team as part of the **[AI4ALL Ignite](https://ai-4-all.org/)** accelerator program, investigating AI's capability to detect brain vessel abnormalities compared to radiologist review.*
 
