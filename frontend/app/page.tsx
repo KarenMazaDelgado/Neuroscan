@@ -10,9 +10,10 @@ const NiftiViewer = dynamic(() => import('./components/NiftiViewer'), { ssr: fal
 // Use the local Next.js proxy rewrite path
 // DEFINED ONCE AT COMPONENT SCOPE
 // const HF_SPACE_URL = "https://ai4all3dcnn-neuroscan-backend.hf.space";
-const HF_SPACE_URL = "https://cooleschimo-neuroscan-backend.hf.space";
-// const HF_SPACE_URL = "http://127.0.0.1:7860";  // Local backend (only for local dev)
-
+// const HF_SPACE_URL = "https://cooleschimo-neuroscan-backend.hf.space";
+// // const HF_SPACE_URL = "http://127.0.0.1:7860";  // Local backend (only for local dev)
+const HF_SPACE_URL =
+  `${typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"}/api/gradio-proxy`;
 interface AnalysisResult {
   predictions: [string, number][];
   scan_data: string | null;
